@@ -18,13 +18,13 @@ A single-player scrapyard management and industrial business simulation set in a
 
 - TypeScript
 - Vite
-- Phaser 4 for the yard renderer
+- Phaser 4 planned for the later yard-rendering stage (not part of this functional-first prototype)
 - HTML/CSS for management interfaces
 - IndexedDB for local saves
-- `vite-plugin-pwa` for offline application caching
+- PWA service-worker caching planned for a later offline-readiness stage
 - Vitest for automated tests
 
-The first implementation milestone will validate the rendering/input approach and performance before expanding the game systems.
+The current prototype uses a compact HTML/CSS management interface and a schematic yard board. It prioritizes working inventory, economy, expedition, processing, time, and saving systems; final pixel-art rendering and PWA caching are deliberately deferred.
 
 ## Run locally
 
@@ -64,7 +64,7 @@ The game currently uses browser-local IndexedDB for its main save. Use **Export*
 - `docs/development/` — roadmap and milestones
 - `docs/testing/` — testing strategy
 - `docs/production/` — asset and release planning
-- `src/` — modular application and game systems (implementation pending)
+- `src/` — modular application, simulation, content, persistence, and interface code
 - `data/` — data-driven game definitions
 - `assets/` — visual, audio, font, and UI resources
 - `tests/` — automated test organization
@@ -95,6 +95,7 @@ The game currently uses browser-local IndexedDB for its main save. Use **Export*
 - [x] Application scaffold created
 - [x] First playable business-loop prototype implemented
 - [x] Inventory, sorting, expedition, market, ledger, time controls, and local save/export/import foundation implemented
-- [ ] Automated tests and browser playtest verified
+- [x] Simulation test cases authored
+- [ ] Automated test run and browser playtest verified
 
-**Development boundary:** Do not create or modify gameplay code until the project owner explicitly authorizes coding.
+**Prototype focus:** Functional gameplay first. The visual yard is a temporary schematic interface, not the final art direction.
