@@ -5,6 +5,7 @@ export function createNewGame(): GameState {
     version: 1,
     day: 1,
     minuteOfDay: 8 * 60,
+    minuteRemainder: 0,
     speed: 1,
     cash: 1200,
     reputation: 0,
