@@ -71,6 +71,7 @@ The first implementation milestone will validate the rendering/input approach an
 - [x] Prototype scope and acceptance criteria defined
 - [x] UI/UX behavior specified
 - [x] Starter items, workers, vehicle, facility, and destination specified
+- [x] Initial economy and processing balance values proposed
 - [x] Asset direction and sourcing rules documented
 - [ ] Application scaffold created
 - [ ] First playable prototype implemented
