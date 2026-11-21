@@ -9,6 +9,7 @@ if (!root) throw new Error("App root is missing.");
 
 let state: GameState = createGame();
 let lastFrame = performance.now();
+let lastRenderedTime = "";
 let saveTimer = 0;
 let activeTab = "yard";
 let searchText = "";
@@ -44,8 +45,8 @@ function inventoryRows(): string {
 function render(): void {
   const weight = inventoryWeight(state);
   const activity = state.activity;
-  const activityProgress = activity ? Math.max(0, Math.min(100, ((Date.now() - 0) / 1))) : 0;
-  const activeLabel = activity ? `${activity.description} · ${Math.max(0, Math.ceil((activity.completesAt - ((state.day - 1) * 1440 + state.minuteOfDay)) / state.speed || 0))} game minutes remaining` : "No active work";
+  const remainingMinutes = activity ? Math.max(0, activity.completesAt - ((state.day - 1) * 1440 + state.minuteOfDay)) : 0;
+  const activeLabel = activity ? `${activity.description} · ${state.speed === 0 ? "paused" : `${Math.ceil(remainingMinutes / state.speed)} game minutes remaining`}` : "No active work";
   root.innerHTML = `
     <header class="topbar">
       <div class="brand"><span class="brand-mark">SK</span><div><strong>SCRAP KINGDOM</strong><small>A DEAD COUNTRY · BUSINESS PROTOTYPE</small></div></div>
@@ -166,13 +167,15 @@ async function boot(): Promise<void> {
   catch { notice = "Local storage could not be opened. You can still play, but export backups regularly."; }
   render();
   lastFrame = performance.now();
+  lastRenderedTime = formatGameTime(state);
   window.setInterval(() => {
     const now = performance.now();
     const elapsed = Math.min(1, (now - lastFrame) / 1000);
     lastFrame = now;
     const before = JSON.stringify(state.activity);
     advanceTime(state, elapsed);
-    if (before !== JSON.stringify(state.activity)) render();
+    const currentTime = formatGameTime(state);
+    if (before !== JSON.stringify(state.activity) || currentTime !== lastRenderedTime) { render(); lastRenderedTime = currentTime; }
     saveTimer += elapsed;
     if (saveTimer >= 15) { saveTimer = 0; void persist(); }
     if (state.speed !== 0 && !state.activity && state.minuteOfDay % 5 === 0 && elapsed > 0) render();
