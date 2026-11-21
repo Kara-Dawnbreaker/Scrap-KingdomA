@@ -2,7 +2,7 @@
 
 A single-player scrapyard management and industrial business simulation set in a fictional country recovering from industrial collapse.
 
-> **Current stage:** Repository and technical planning are complete. Gameplay implementation has not started yet.
+> **Current stage:** Repository, technical blueprint, prototype design, interface specification, starter content, and asset plan are prepared. Gameplay implementation has not started.
 
 ## Project direction
 
@@ -26,23 +26,29 @@ A single-player scrapyard management and industrial business simulation set in a
 
 The first implementation milestone will validate the rendering/input approach and performance before expanding the game systems.
 
-## Repository map
-
-- `docs/design/` — original GDD and design decisions
-- `docs/architecture/` — architecture and technical blueprint
-- `docs/development/` — roadmap and milestones
-- `src/` — modular application and game systems (implementation pending)
-- `data/` — data-driven game definitions
-- `assets/` — visual, audio, font, and UI resources
-- `tests/` — automated test organization
-
 ## Start here
 
 1. [Complete GDD](docs/design/GDD_SOURCE.md)
 2. [Technical Blueprint](docs/architecture/TECHNICAL_BLUEPRINT.md)
-3. [Architecture](docs/architecture/ARCHITECTURE.md)
-4. [Project Structure](docs/architecture/PROJECT_STRUCTURE.md)
-5. [Development Roadmap](docs/development/ROADMAP.md)
+3. [First Playable Prototype Specification](docs/design/PROTOTYPE_SPEC.md)
+4. [UI/UX Specification](docs/design/UI_UX_SPEC.md)
+5. [Starter Content Catalogue](docs/design/STARTER_CONTENT_CATALOG.md)
+6. [Asset Plan](docs/production/ASSET_PLAN.md)
+7. [Architecture](docs/architecture/ARCHITECTURE.md)
+8. [Project Structure](docs/architecture/PROJECT_STRUCTURE.md)
+9. [Development Roadmap](docs/development/ROADMAP.md)
+
+## Repository map
+
+- `docs/design/` — original GDD, prototype scope, interface, and content definitions
+- `docs/architecture/` — architecture and technical blueprint
+- `docs/development/` — roadmap and milestones
+- `docs/testing/` — testing strategy
+- `docs/production/` — asset and release planning
+- `src/` — modular application and game systems (implementation pending)
+- `data/` — data-driven game definitions
+- `assets/` — visual, audio, font, and UI resources
+- `tests/` — automated test organization
 
 ## Development phases
 
@@ -60,9 +66,13 @@ The first implementation milestone will validate the rendering/input approach an
 
 - [x] Original GDD stored in repository
 - [x] Repository structure prepared
-- [x] Architecture boundaries documented
 - [x] Technology direction selected
-- [x] Technical blueprint written
-- [x] Prototype scope and acceptance gate defined
+- [x] Technical blueprint and architecture recorded
+- [x] Prototype scope and acceptance criteria defined
+- [x] UI/UX behavior specified
+- [x] Starter items, workers, vehicle, facility, and destination specified
+- [x] Asset direction and sourcing rules documented
 - [ ] Application scaffold created
 - [ ] First playable prototype implemented
+
+**Development boundary:** Do not create or modify gameplay code until the project owner explicitly authorizes coding.
