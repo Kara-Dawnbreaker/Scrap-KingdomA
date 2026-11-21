@@ -32,6 +32,18 @@ describe("Scrap Kingdom first prototype", () => {
     expect(state.inventory.some((lot) => lot.origin === "Sorted mixed scrap")).toBe(true);
   });
 
+  it("accumulates fractional time steps without losing clock progress", () => {
+    const state = createGame();
+    advanceTime(state, 0.25);
+    advanceTime(state, 0.25);
+    advanceTime(state, 0.25);
+    advanceTime(state, 0.25);
+    expect(state.minuteOfDay).toBe(481);
+    state.speed = 0;
+    advanceTime(state, 10);
+    expect(state.minuteOfDay).toBe(481);
+  });
+
   it("charges the dispatch cost and resolves an expedition after its travel time", () => {
     const state = createGame();
     expect(startExpedition(state).ok).toBe(true);
