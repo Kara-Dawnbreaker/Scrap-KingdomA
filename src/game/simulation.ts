@@ -178,10 +178,11 @@ export function sellLot(state: GameState, lotId: string, quantity: number): Acti
 export function advanceTime(state: GameState, realSeconds: number): void {
   if (state.speed === 0 || realSeconds <= 0) return;
   const previous = absoluteMinutes(state);
-  const minutesToAdvance = realSeconds * state.speed;
-  const next = previous + minutesToAdvance;
+  const exactNext = previous + (state.minuteRemainder ?? 0) + realSeconds * state.speed;
+  const next = Math.floor(exactNext);
+  state.minuteRemainder = exactNext - next;
   state.day = Math.floor(next / 1440) + 1;
-  state.minuteOfDay = Math.floor(next % 1440);
+  state.minuteOfDay = next % 1440;
   const activity = state.activity;
   if (activity && absoluteMinutes(state) >= activity.completesAt) {
     if (activity.kind === "processing") resolveSorting(state, activity.seed);
