@@ -40,6 +40,7 @@ export interface GameState {
   version: 1;
   day: number;
   minuteOfDay: number;
+  minuteRemainder?: number;
   speed: 0 | 1 | 2;
   cash: number;
   reputation: number;
