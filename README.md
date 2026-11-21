@@ -2,7 +2,7 @@
 
 A single-player scrapyard management and industrial business simulation set in a fictional country recovering from industrial collapse.
 
-> **Current stage:** Repository, technical blueprint, prototype design, interface specification, starter content, and asset plan are prepared. Gameplay implementation has not started.
+> **Current stage:** First functional gameplay prototype implemented. The current build focuses on management systems and readable interface blocks; final pixel-art rendering is intentionally deferred.
 
 ## Project direction
 
@@ -73,7 +73,9 @@ The first implementation milestone will validate the rendering/input approach an
 - [x] Starter items, workers, vehicle, facility, and destination specified
 - [x] Initial economy and processing balance values proposed
 - [x] Asset direction and sourcing rules documented
-- [ ] Application scaffold created
-- [ ] First playable prototype implemented
+- [x] Application scaffold created
+- [x] First playable business-loop prototype implemented
+- [x] Inventory, sorting, expedition, market, ledger, time controls, and local save/export/import foundation implemented
+- [ ] Automated tests and browser playtest verified
 
 **Development boundary:** Do not create or modify gameplay code until the project owner explicitly authorizes coding.
