@@ -26,6 +26,25 @@ A single-player scrapyard management and industrial business simulation set in a
 
 The first implementation milestone will validate the rendering/input approach and performance before expanding the game systems.
 
+## Run locally
+
+Requirements: Node.js 20 or newer.
+
+```bash
+npm install
+npm run dev
+```
+
+Open the local URL printed by Vite. To verify the prototype:
+
+```bash
+npm test
+npm run typecheck
+npm run build
+```
+
+The game currently uses browser-local IndexedDB for its main save. Use **Export** regularly to keep a portable backup.
+
 ## Start here
 
 1. [Complete GDD](docs/design/GDD_SOURCE.md)
