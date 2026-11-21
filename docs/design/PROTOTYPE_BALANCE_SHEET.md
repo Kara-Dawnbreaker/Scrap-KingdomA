@@ -27,7 +27,7 @@
 | Steel Offcuts | 4 | Used | 3 kg | 15 CR |
 | Bearings | 2 | Good | 1 kg | 22 CR |
 
-Starting inventory weight: 66 kg. Keep enough free storage for expedition cargo.
+Starting inventory weight: 74 kg. Keep enough free storage for expedition cargo.
 
 ## 3. Item reference values
 
@@ -112,8 +112,8 @@ The report must show gross recovered reference value, estimated buyer value, dis
 | Expected output | Iron Scrap, Steel Offcuts, Low-grade Residue |
 
 Initial output range per bundle:
-- Iron Scrap: 3–5 units.
-- Steel Offcuts: 1–3 units.
+- Iron Scrap: 2–4 units.
+- Steel Offcuts: 1–2 units.
 - Low-grade Residue: 0–1 unit.
 
 Output weights must be physically consistent with the input weight. Any unreturned weight is recorded as processing loss, not silently discarded. Show expected ranges before starting. A seeded random outcome makes results reproducible in tests.
