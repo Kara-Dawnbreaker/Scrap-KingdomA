@@ -1,6 +1,6 @@
 # Scrap Kingdom: A Dead Country — GDD index
 
-The user-provided complete GDD is the authoritative design source for this project. It defines a single-player scrapyard management, business simulation, resource management, and crafting game set in a fictional post-conflict country.
+The complete original user-provided GDD is preserved at [GDD_SOURCE.md](GDD_SOURCE.md) and is the authoritative design source for this project. It defines a single-player scrapyard management, business simulation, resource management, and crafting game set in a fictional post-conflict country.
 
 ## Design pillars
 1. Resourcefulness
