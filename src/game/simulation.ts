@@ -176,7 +176,7 @@ export function sellLot(state: GameState, lotId: string, quantity: number): Acti
 }
 
 export function advanceTime(state: GameState, realSeconds: number): void {
-  if (state.speed === 0 || !state.activity || realSeconds <= 0) return;
+  if (state.speed === 0 || realSeconds <= 0) return;
   const previous = absoluteMinutes(state);
   const minutesToAdvance = realSeconds * state.speed;
   const next = previous + minutesToAdvance;
@@ -206,9 +206,6 @@ export function createGame(): GameState {
   return createNewGame();
 }
 
-export function resetGame(state: GameState): GameState {
-  return createNewGame();
-}
 
 export function exportSave(state: GameState): string {
   return JSON.stringify({ app: "scrap-kingdom", version: 1, savedAt: new Date().toISOString(), state }, null, 2);
