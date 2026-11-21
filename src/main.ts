@@ -4,8 +4,7 @@ import { advanceTime, buyerPrice, changeDemand, createGame, exportSave, formatGa
 import { loadGame, saveGame } from "./game/storage";
 import type { GameState } from "./game/types";
 
-const root = document.querySelector<HTMLDivElement>("#app");
-if (!root) throw new Error("App root is missing.");
+const root = document.querySelector<HTMLDivElement>("#app")!;
 
 let state: GameState = createGame();
 let lastFrame = performance.now();
