@@ -22,7 +22,7 @@ A single-player scrapyard management and industrial business simulation set in a
 - `tests/` — future automated and manual test organization
 - `tools/` — future development and content utilities
 
-See [Project Structure](docs/architecture/PROJECT_STRUCTURE.md), [Architecture Plan](docs/architecture/ARCHITECTURE.md), and [Roadmap](docs/development/ROADMAP.md).
+Read the [complete GDD](docs/design/GDD_SOURCE.md). See [Project Structure](docs/architecture/PROJECT_STRUCTURE.md), [Architecture Plan](docs/architecture/ARCHITECTURE.md), and [Roadmap](docs/development/ROADMAP.md).
 
 ## Development phases
 
