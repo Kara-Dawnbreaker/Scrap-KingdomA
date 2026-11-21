@@ -1,5 +1,5 @@
 import "./styles.css";
-import { ITEMS, itemById } from "./game/content";
+import { itemById } from "./game/content";
 import { advanceTime, buyerPrice, changeDemand, createGame, exportSave, formatGameTime, importSave, inventoryValue, inventoryWeight, sellLot, setSpeed, startExpedition, startSorting, STORAGE_CAPACITY } from "./game/simulation";
 import { loadGame, saveGame } from "./game/storage";
 import type { GameState } from "./game/types";
