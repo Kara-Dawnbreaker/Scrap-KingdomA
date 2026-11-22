@@ -132,9 +132,9 @@ function yardView(activeLabel: string): string {
           <div class="map-prop pallet-map"><span>▦ ▦</span><small>PALLETS</small></div>
           <div class="map-prop drum-map"><span>● ● ●</span><small>DRUMS</small></div>
           <div class="map-prop tire-map"><span>◉ ◉</span><small>TYRES</small></div>
-          <div class="map-vehicle" data-yard-action="van" role="button" tabindex="0" aria-label="Dispatch cargo van">
+          <button class="map-vehicle" data-yard-action="van" aria-label="Dispatch cargo van">
             <span class="map-van-cab"></span><span class="map-van-body"></span><b>VAN</b>
-          </div>
+          </button>
           <div class="map-tree tree-a"></div><div class="map-tree tree-b"></div><div class="map-tree tree-c"></div>
           <div class="map-work-zone"><span>LOADING AREA</span></div>
           <div class="map-gate"><span>MAIN GATE</span></div>
