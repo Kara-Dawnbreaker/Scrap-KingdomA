@@ -1,6 +1,6 @@
 import "./styles.css";
 import { itemById } from "./game/content";
-import { advanceTime, buyerPrice, changeDemand, createGame, exportSave, formatGameTime, importSave, inventoryValue, inventoryWeight, sellLot, setSpeed, startExpedition, startSorting, STORAGE_CAPACITY } from "./game/simulation";
+import { advanceTime, buyerPrice, changeDemand, createGame, exportSave, formatGameTime, importSave, inventoryWeight, sellLot, setSpeed, startExpedition, startSorting, STORAGE_CAPACITY } from "./game/simulation";
 import { loadGame, saveGame } from "./game/storage";
 import type { GameState } from "./game/types";
 
@@ -142,7 +142,6 @@ function yardView(activeLabel: string): string {
   `;
 }
 function absoluteTime(): number { return (state.day - 1) * 1440 + state.minuteOfDay; }
-function absoluteTimeLabel(time: number): string { return time <= absoluteTime() ? "AVAILABLE" : `RECOVERS IN ${Math.ceil((time - absoluteTime()) / 60)} H`; }
 function weightLabel(): string { return `${inventoryWeight(state).toFixed(0)} KG`; }
 
 function inventoryView(): string {
