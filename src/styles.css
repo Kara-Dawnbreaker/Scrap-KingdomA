@@ -25,7 +25,7 @@
 .map-pile b{font:9px monospace}.map-pile small{font:7px monospace;color:#d4c6a0}.scrap-shapes{font:21px monospace;letter-spacing:3px;text-shadow:2px 2px #32372b}
 .mixed-map{left:12%;top:69%}.metal-map{left:39%;top:69%;background:repeating-linear-gradient(135deg,#68736a 0 8px,#535e56 8px 16px)}.recovery-map{right:11%;top:69%;background:repeating-linear-gradient(135deg,#81715a 0 8px,#655b48 8px 16px)}
 .map-prop{position:absolute;display:grid;place-items:center;gap:2px;color:#e6c98e;text-shadow:1px 1px #34372b;z-index:2}.map-prop span{font:20px monospace;background:#98784b;border:3px solid #624d32;padding:4px 8px;box-shadow:3px 4px #3c3c2d}.map-prop small{font:7px monospace}.pallet-map{left:65%;top:43%}.drum-map{left:29%;top:44%}.drum-map span{background:#6c786b;border-color:#465044}.tire-map{right:28%;top:44%}.tire-map span{background:#45483e;border-color:#252a24}
-.map-vehicle{position:absolute;left:48%;top:77%;width:15%;height:9%;display:flex;align-items:center;justify-content:center;gap:3px;cursor:pointer;z-index:3;filter:drop-shadow(3px 4px 0 rgba(25,28,21,.55))}
+.map-vehicle{appearance:none;padding:0;background:transparent;border:0;font:inherit;position:absolute;left:48%;top:77%;width:15%;height:9%;display:flex;align-items:center;justify-content:center;gap:3px;cursor:pointer;z-index:3;filter:drop-shadow(3px 4px 0 rgba(25,28,21,.55))}
 .map-van-body{width:62%;height:75%;background:#b88b4d;border:3px solid #59452c;box-shadow:inset 0 0 0 3px #d0ad72}
 .map-van-cab{width:26%;height:59%;background:#d4b477;border:3px solid #77562f}
 .map-vehicle b{position:absolute;bottom:-14px;font:8px monospace;color:#f0dfb7;text-shadow:1px 1px #333}
