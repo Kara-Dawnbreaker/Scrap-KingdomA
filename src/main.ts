@@ -48,31 +48,40 @@ function render(): void {
   const activeLabel = activity ? `${activity.description} · ${state.speed === 0 ? "paused" : `${Math.ceil(remainingMinutes / state.speed)} game minutes remaining`}` : "No active work";
   root.innerHTML = `
     <header class="topbar">
-      <div class="brand"><span class="brand-mark">SK</span><div><strong>SCRAP KINGDOM</strong><small>A DEAD COUNTRY · BUSINESS PROTOTYPE</small></div></div>
+      <div class="brand"><span class="brand-mark">SK</span><div><strong>SCRAP KINGDOM</strong><small>A DEAD COUNTRY</small></div></div>
       <div class="top-stats">
         <div><small>CASH</small><strong>${money(state.cash)}</strong></div>
         <div><small>REPUTATION</small><strong>${state.reputation}</strong></div>
-        <div><small>YARD STORAGE</small><strong>${weight.toFixed(1)} / ${STORAGE_CAPACITY} kg</strong></div>
-        <div><small>LOCAL TIME</small><strong>${formatGameTime(state)}</strong></div>
+        <div><small>STORAGE</small><strong>${weight.toFixed(1)} / ${STORAGE_CAPACITY} kg</strong></div>
+        <div><small>DAY / TIME</small><strong>${state.day} · ${formatGameTime(state)}</strong></div>
+      </div>
+      <div class="top-tools">
+        <span class="time-state">${state.speed === 0 ? "PAUSED" : state.speed === 1 ? "1×" : "2×"}</span>
+        <button class="button button-small" data-speed="0">${state.speed === 0 ? "Resume" : "Pause"}</button>
+        <button class="button button-small ${state.speed === 1 ? "active" : ""}" data-speed="1">1×</button>
+        <button class="button button-small ${state.speed === 2 ? "active" : ""}" data-speed="2">2×</button>
+        <button class="button button-small" id="save" title="Save game">${saving ? "Saving…" : "Save"}</button>
+        <button class="button button-small" id="export">Export</button>
+        <label class="button button-small file-label">Import<input id="import" type="file" accept="application/json"></label>
       </div>
     </header>
     <main class="layout">
       <aside class="sidebar">
-        <div class="yard-label">THE ROADSIDE YARD</div>
+        <div class="yard-label">OPERATIONS</div>
         <nav>
-          <button class="nav-button ${activeTab === "yard" ? "selected" : ""}" data-tab="yard">Overview</button>
-          <button class="nav-button ${activeTab === "inventory" ? "selected" : ""}" data-tab="inventory">Inventory</button>
-          <button class="nav-button ${activeTab === "expedition" ? "selected" : ""}" data-tab="expedition">Scavenging</button>
-          <button class="nav-button ${activeTab === "market" ? "selected" : ""}" data-tab="market">Market</button>
-          <button class="nav-button ${activeTab === "ledger" ? "selected" : ""}" data-tab="ledger">Finance ledger</button>
+          <button class="nav-button ${activeTab === "yard" ? "selected" : ""}" data-tab="yard"><span>▦</span> Yard</button>
+          <button class="nav-button ${activeTab === "inventory" ? "selected" : ""}" data-tab="inventory"><span>▤</span> Inventory</button>
+          <button class="nav-button ${activeTab === "expedition" ? "selected" : ""}" data-tab="expedition"><span>⇢</span> Scavenging</button>
+          <button class="nav-button ${activeTab === "market" ? "selected" : ""}" data-tab="market"><span>¤</span> Market</button>
+          <button class="nav-button ${activeTab === "ledger" ? "selected" : ""}" data-tab="ledger"><span>≡</span> Finance</button>
         </nav>
         <div class="sidebar-bottom">
           <div class="vehicle-box"><small>USED CARGO VAN</small><strong>${state.vehicleCondition}% condition</strong><div class="meter"><i style="width:${state.vehicleCondition}%"></i></div><small>250 kg capacity</small></div>
-          <div class="save-actions"><button class="button button-small" id="save">Save</button><button class="button button-small" id="export">Export</button><label class="button button-small file-label">Import<input id="import" type="file" accept="application/json"></label></div>
+          <div class="save-state">${saving ? "SAVING…" : "● LOCAL SAVE ACTIVE"}</div>
         </div>
       </aside>
-      <section class="content">
-        <div class="content-heading"><div><p class="eyebrow">DAY ${state.day} · SMALL YARD</p><h1>${tabTitle(activeTab)}</h1><p class="muted">${tabDescription(activeTab)}</p></div><div class="time-controls"><span class="time-state">${state.speed === 0 ? "PAUSED" : state.speed === 1 ? "1× SPEED" : "2× SPEED"}</span><button class="button button-small" data-speed="0">${state.speed === 0 ? "Resume" : "Pause"}</button><button class="button button-small ${state.speed === 1 ? "active" : ""}" data-speed="1">1×</button><button class="button button-small ${state.speed === 2 ? "active" : ""}" data-speed="2">2×</button></div></div>
+      <section class="content ${activeTab === "yard" ? "yard-content" : "management-content"}">
+        ${activeTab !== "yard" ? `<div class="content-heading"><div><p class="eyebrow">DAY ${state.day} · SMALL YARD</p><h1>${tabTitle(activeTab)}</h1><p class="muted">${tabDescription(activeTab)}</p></div></div>` : ""}
         ${notice ? `<div class="notice">${safe(notice)}<button id="dismiss-notice">×</button></div>` : ""}
         ${activeTab === "yard" ? yardView(activeLabel) : ""}
         ${activeTab === "inventory" ? inventoryView() : ""}
@@ -81,7 +90,6 @@ function render(): void {
         ${activeTab === "ledger" ? ledgerView() : ""}
       </section>
     </main>
-    <footer><span>SCRAP KINGDOM · PROTOTYPE 0.1</span><span>${saving ? "SAVING…" : "LOCAL SAVE"} · NO CLOUD REQUIRED</span></footer>
   `;
   bindEvents();
 }
@@ -95,32 +103,42 @@ function tabDescription(tab: string): string {
 function yardView(activeLabel: string): string {
   const mixed = state.inventory.filter((lot) => lot.itemId === "mixed-scrap").reduce((sum, lot) => sum + lot.quantity, 0);
   return `
-    <div class="yard-summary">
-      <div class="yard-scene">
-        <div class="scene-top"><span>YARD MAP · SECTOR 01</span><span>ROAD ACCESS</span></div>
-        <div class="yard-grid">
-          <div class="yard-road"><span>ROAD</span><span>↓</span></div>
-          <div class="yard-building office"><b>OFFICE</b><small>OPEN</small></div>
-          <div class="yard-building storage"><b>STORAGE</b><small>${weightLabel()} STORED</small></div>
-          <div class="yard-building sorting"><b>SORTING</b><small>${mixed > 0 ? `${mixed} BUNDLES READY` : "NO INPUT"}</small></div>
-          <div class="scrap-pile pile-one">SCRAP</div><div class="scrap-pile pile-two">METAL</div>
-          <div class="van">▰ VAN</div>
+    <div class="yard-toolbar">
+      <div><span class="eyebrow">YOUR PROPERTY · SECTOR 01</span><strong>THE ROADSIDE YARD</strong></div>
+      <div class="yard-status"><span class="status-dot ${state.activity ? "working" : ""}"></span>${safe(activeLabel)}</div>
+    </div>
+    <div class="yard-world" aria-label="Top-down view of your scrapyard">
+      <div class="yard-fence">
+        <div class="yard-ground">
+          <div class="yard-road road-west"><span>ACCESS ROAD</span></div>
+          <div class="yard-road road-east"></div>
+          <div class="yard-road road-south"><span>GATE / ROAD ACCESS</span></div>
+          <div class="yard-lane lane-horizontal"></div>
+          <div class="yard-lane lane-vertical"></div>
+          <div class="yard-zone zone-office">ADMINISTRATION</div>
+          <button class="yard-building office" data-yard-action="office" aria-label="Open yard office">
+            <span class="building-roof"><i>▦</i></span><b>YARD OFFICE</b><small>BUSINESS RECORDS</small>
+          </button>
+          <button class="yard-building storage" data-yard-action="storage" aria-label="Open storage inventory">
+            <span class="building-roof"><i>▤</i></span><b>STORAGE SHED</b><small>${weightLabel()} STORED</small>
+          </button>
+          <button class="yard-building sorting" data-yard-action="sorting" aria-label="Use sorting station">
+            <span class="building-roof"><i>⚒</i></span><b>SORTING BAY</b><small>${mixed > 0 ? `${mixed} BUNDLES READY` : "NO INPUT STOCK"}</small>
+          </button>
+          <div class="yard-pile pile-one"><span>▰ ▪ ▰</span><b>MIXED SCRAP</b><small>${mixed} BUNDLES</small></div>
+          <div class="yard-pile pile-two"><span>▰ ▰</span><b>METAL STACK</b><small>IRON / STEEL</small></div>
+          <div class="yard-pile pile-three"><span>▪ ▰ ▪</span><b>RECOVERY LOT</b><small>UNSORTED</small></div>
+          <div class="yard-pallet"><span>▦ ▦</span><small>PALLETS</small></div>
+          <button class="yard-vehicle" data-yard-action="van" aria-label="Dispatch cargo van">
+            <span class="van-cab"></span><span class="van-body"></span><b>VAN</b>
+          </button>
+          <div class="yard-tree tree-one">♣</div><div class="yard-tree tree-two">♣</div>
+          <div class="yard-sign">SCRAP KINGDOM <small>EST. DAY 01</small></div>
+          <div class="yard-gate">MAIN GATE</div>
         </div>
-        <div class="scene-bottom"><span>THE ROADSIDЕ YARD</span><span>FACILITIES: 3 · VEHICLES: 1</span></div>
-      </div>
-      <div class="side-stack">
-        <article class="panel activity-panel"><div class="panel-head"><h2>Current operation</h2><span class="status-dot ${state.activity ? "working" : ""}"></span></div><strong>${safe(activeLabel)}</strong><p class="muted">${state.activity ? "The operation advances with game time. Pause or change speed whenever you like." : "Your crew and sorting station are available."}</p>${state.activity ? '<div class="meter"><i class="indeterminate"></i></div>' : '<div class="quiet-line">READY FOR ORDERS</div>'}</article>
-        <article class="panel"><div class="panel-head"><h2>Business snapshot</h2><span class="tag">START-UP</span></div><div class="metric-list"><div><span>Estimated stock value</span><strong>${money(inventoryValue(state))}</strong></div><div><span>Mixed bundles</span><strong>${mixed}</strong></div><div><span>Warehouse status</span><strong>${absoluteTimeLabel(state.destinationReadyAt)}</strong></div><div><span>Buyer demand</span><strong>${state.demand}</strong></div></div></article>
       </div>
     </div>
-    <div class="section-heading"><div><h2>What needs doing?</h2><p class="muted">The business loop starts with small, deliberate decisions.</p></div></div>
-    <div class="action-grid">
-      <article class="action-card"><span class="action-index">01 / SORT</span><h3>Turn mixed scrap into stock</h3><p>Process one mixed bundle into categorized materials. Outputs are weighed; any loss is recorded.</p><button class="button" id="sort" ${mixed === 0 || state.activity ? "disabled" : ""}>Start sorting · 30 min</button></article>
-      <article class="action-card"><span class="action-index">02 / SCAVENGE</span><h3>Send the van out</h3><p>Spend 90 CR to search the abandoned warehouse. The trip takes two in-game hours.</p><button class="button" id="dispatch" ${state.activity || state.cash < 90 || absoluteTime() < state.destinationReadyAt || state.vehicleCondition < 20 ? "disabled" : ""}>Dispatch · 90 CR</button></article>
-      <article class="action-card"><span class="action-index">03 / SELL</span><h3>Turn stock into cash</h3><p>Check the buyer's offer and sell individual lots. You can keep rare materials for later.</p><button class="button button-secondary" data-tab="market">Open market</button></article>
-    </div>
-    <div class="section-heading"><div><h2>Recent yard activity</h2><p class="muted">The latest events in your business.</p></div></div>
-    <div class="panel notification-list">${state.notifications.slice(0, 5).map((message) => `<div><span class="bullet"></span>${safe(message)}</div>`).join("")}</div>
+    <div class="yard-hint"><span>SELECT A BUILDING OR VEHICLE TO INTERACT</span><span>YARD VIEW · OVERHEAD</span></div>
   `;
 }
 function absoluteTime(): number { return (state.day - 1) * 1440 + state.minuteOfDay; }
@@ -144,6 +162,20 @@ function ledgerView(): string {
 
 function bindEvents(): void {
   root.querySelectorAll<HTMLElement>("[data-tab]").forEach((button) => button.addEventListener("click", () => { activeTab = button.dataset.tab ?? "yard"; notice = ""; render(); }));
+  root.querySelectorAll<HTMLButtonElement>("[data-yard-action]").forEach((button) => button.addEventListener("click", () => {
+    const action = button.dataset.yardAction;
+    if (action === "storage") { activeTab = "inventory"; render(); return; }
+    if (action === "office") { activeTab = "ledger"; render(); return; }
+    if (action === "sorting") {
+      const lot = state.inventory.find((entry) => entry.itemId === "mixed-scrap");
+      if (!lot) { showNotice("There are no mixed scrap bundles waiting to be sorted."); return; }
+      if (state.activity) { showNotice("Finish the current operation before starting another."); return; }
+      const result = startSorting(state, lot.id); showNotice(result.message); persist(); return;
+    }
+    if (action === "van") {
+      const result = startExpedition(state); showNotice(result.message); persist(); return;
+    }
+  }));
   root.querySelectorAll<HTMLButtonElement>("[data-speed]").forEach((button) => button.addEventListener("click", () => { setSpeed(state, Number(button.dataset.speed) as 0 | 1 | 2); render(); }));
   root.querySelectorAll<HTMLButtonElement>("[data-sell]").forEach((button) => button.addEventListener("click", () => { const result = sellLot(state, button.dataset.sell ?? "", 1); showNotice(result.message); persist(); }));
   root.querySelector<HTMLButtonElement>("#sort")?.addEventListener("click", () => { const lot = state.inventory.find((entry) => entry.itemId === "mixed-scrap"); if (lot) { const result = startSorting(state, lot.id); showNotice(result.message); persist(); } });
