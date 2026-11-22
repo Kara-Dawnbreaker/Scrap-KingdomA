@@ -108,37 +108,41 @@ function yardView(activeLabel: string): string {
       <div class="yard-status"><span class="status-dot ${state.activity ? "working" : ""}"></span>${safe(activeLabel)}</div>
     </div>
     <div class="yard-world" aria-label="Top-down view of your scrapyard">
-      <div class="yard-fence">
-        <div class="yard-ground">
-          <div class="yard-road road-west"><span>ACCESS ROAD</span></div>
-          <div class="yard-road road-east"></div>
-          <div class="yard-road road-south"><span>GATE / ROAD ACCESS</span></div>
-          <div class="yard-lane lane-horizontal"></div>
-          <div class="yard-lane lane-vertical"></div>
-          <div class="yard-zone zone-office">ADMINISTRATION</div>
-          <button class="yard-building office" data-yard-action="office" aria-label="Open yard office">
-            <span class="building-roof"><i>▦</i></span><b>YARD OFFICE</b><small>BUSINESS RECORDS</small>
-          </button>
-          <button class="yard-building storage" data-yard-action="storage" aria-label="Open storage inventory">
-            <span class="building-roof"><i>▤</i></span><b>STORAGE SHED</b><small>${weightLabel()} STORED</small>
-          </button>
-          <button class="yard-building sorting" data-yard-action="sorting" aria-label="Use sorting station">
-            <span class="building-roof"><i>⚒</i></span><b>SORTING BAY</b><small>${mixed > 0 ? `${mixed} BUNDLES READY` : "NO INPUT STOCK"}</small>
-          </button>
-          <div class="yard-pile pile-one"><span>▰ ▪ ▰</span><b>MIXED SCRAP</b><small>${mixed} BUNDLES</small></div>
-          <div class="yard-pile pile-two"><span>▰ ▰</span><b>METAL STACK</b><small>IRON / STEEL</small></div>
-          <div class="yard-pile pile-three"><span>▪ ▰ ▪</span><b>RECOVERY LOT</b><small>UNSORTED</small></div>
-          <div class="yard-pallet"><span>▦ ▦</span><small>PALLETS</small></div>
-          <button class="yard-vehicle" data-yard-action="van" aria-label="Dispatch cargo van">
-            <span class="van-cab"></span><span class="van-body"></span><b>VAN</b>
-          </button>
-          <div class="yard-tree tree-one">♣</div><div class="yard-tree tree-two">♣</div>
-          <div class="yard-sign">SCRAP KINGDOM <small>EST. DAY 01</small></div>
-          <div class="yard-gate">MAIN GATE</div>
+      <div class="map-fence">
+        <div class="map-ground">
+          <div class="map-road map-road-entry"></div>
+          <div class="map-road map-road-main"></div>
+          <div class="map-road map-road-cross"></div>
+          <div class="map-yard-sign">SCRAP KINGDOM <small>SECTOR 01</small></div>
+          <div class="map-building office-map">
+            <span class="map-roof"><i>▦</i></span><b>YARD OFFICE</b><small>ADMINISTRATION</small>
+            <button data-yard-action="office" aria-label="Open yard office"></button>
+          </div>
+          <div class="map-building storage-map">
+            <span class="map-roof"><i>▤</i></span><b>STORAGE SHED</b><small>${weightLabel()} STORED</small>
+            <button data-yard-action="storage" aria-label="Open storage inventory"></button>
+          </div>
+          <div class="map-building sorting-map">
+            <span class="map-roof"><i>⚒</i></span><b>SORTING BAY</b><small>${mixed > 0 ? `${mixed} BUNDLES READY` : "NO INPUT STOCK"}</small>
+            <button data-yard-action="sorting" aria-label="Use sorting station"></button>
+          </div>
+          <div class="map-pile mixed-map"><span class="scrap-shapes">◆ ▰ ◇</span><b>MIXED SCRAP</b><small>${mixed} BUNDLES</small></div>
+          <div class="map-pile metal-map"><span class="scrap-shapes">▰ ▰ ▪</span><b>METAL STACK</b><small>IRON / STEEL</small></div>
+          <div class="map-pile recovery-map"><span class="scrap-shapes">⚙ ▪ ◈</span><b>RECOVERY LOT</b><small>UNSORTED</small></div>
+          <div class="map-prop pallet-map"><span>▦ ▦</span><small>PALLETS</small></div>
+          <div class="map-prop drum-map"><span>● ● ●</span><small>DRUMS</small></div>
+          <div class="map-prop tire-map"><span>◉ ◉</span><small>TYRES</small></div>
+          <div class="map-vehicle" data-yard-action="van" role="button" tabindex="0" aria-label="Dispatch cargo van">
+            <span class="map-van-cab"></span><span class="map-van-body"></span><b>VAN</b>
+          </div>
+          <div class="map-tree tree-a"></div><div class="map-tree tree-b"></div><div class="map-tree tree-c"></div>
+          <div class="map-work-zone"><span>LOADING AREA</span></div>
+          <div class="map-gate"><span>MAIN GATE</span></div>
+          <div class="map-fence-post post-a"></div><div class="map-fence-post post-b"></div>
         </div>
       </div>
     </div>
-    <div class="yard-hint"><span>SELECT A BUILDING OR VEHICLE TO INTERACT</span><span>YARD VIEW · OVERHEAD</span></div>
+    <div class="yard-hint"><span>SELECT A BUILDING OR VEHICLE TO INTERACT</span><span>TOP-DOWN YARD · SECTOR 01</span></div>
   `;
 }
 function absoluteTime(): number { return (state.day - 1) * 1440 + state.minuteOfDay; }
